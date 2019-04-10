@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GalleryPicker</string>
+    <string name="btn_text">Open Phone Gallery</string>
+    <string name="image_text">Image</string>
+</resources>
