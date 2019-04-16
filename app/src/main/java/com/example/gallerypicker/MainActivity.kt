@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
     private val mImageViewModel by lazy {
         ViewModelProviders.of(this, SavedStateVMFactory(this)).get(ImageViewModel::class.java)
     }
-    private val IMAGE_REQUEST = 1111
-    private val INTENT_IMAGE_TYPE = "image/*"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +49,10 @@ class MainActivity : AppCompatActivity() {
                 mImageViewModel.saveNewUri(it)
             }
         }
+    }
 
+    private companion object {
+        const val IMAGE_REQUEST = 1111
+        const val INTENT_IMAGE_TYPE = "image/*"
     }
 }

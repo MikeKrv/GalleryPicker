@@ -12,8 +12,6 @@ import androidx.lifecycle.ViewModel
 
 class ImageViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val IMAGE_KEY = "image"
-
     private val mState : SavedStateHandle = savedStateHandle
 
     fun getUri() : LiveData<Uri>{
@@ -24,4 +22,7 @@ class ImageViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         mState.set(IMAGE_KEY, newURI)
     }
 
+    private companion object {
+        const val IMAGE_KEY = "image"
+    }
 }
