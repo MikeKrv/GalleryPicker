@@ -5,6 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
+/**
+ * @description Utility class for saving state
+ * @author Mikhail Krivosheev
+ */
+
 class ImageViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val IMAGE_KEY = "image"

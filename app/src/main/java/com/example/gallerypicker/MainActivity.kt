@@ -10,9 +10,16 @@ import androidx.lifecycle.SavedStateVMFactory
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * @description Selecting a picture from the gallery.
+ * @author Mikhail Krivosheev
+ */
+
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mImageViewModel: ImageViewModel
+    private val mImageViewModel by lazy {
+        ViewModelProviders.of(this, SavedStateVMFactory(this)).get(ImageViewModel::class.java)
+    }
     private val IMAGE_REQUEST = 1111
     private val INTENT_IMAGE_TYPE = "image/*"
 
@@ -20,22 +27,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mImageViewModel = ViewModelProviders.of(this, SavedStateVMFactory(this))
-            .get(ImageViewModel::class.java)
-
         mImageViewModel.getUri().observe(this, Observer { uri ->
             val image = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-            img_Photo.setImageBitmap(image)
+            imgPhoto.setImageBitmap(image)
         })
 
-        btn_Gallery.setOnClickListener { openGallery() }
+        btnGallery.setOnClickListener { openGallery() }
 
     }
 
     private fun openGallery() {
         val imageRequestIntent = Intent(Intent.ACTION_PICK)
         imageRequestIntent.type = INTENT_IMAGE_TYPE
-        startActivityForResult(Intent.createChooser(imageRequestIntent, "Select image"), IMAGE_REQUEST)
+        startActivityForResult(Intent.createChooser(imageRequestIntent, getString(R.string.image_request_text)), IMAGE_REQUEST)
 
     }
 
@@ -43,8 +47,9 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK){
-            val imageUri = data?.data
-            mImageViewModel.saveNewUri(imageUri)
+            data?.data?.let {
+                mImageViewModel.saveNewUri(it)
+            }
         }
 
     }
